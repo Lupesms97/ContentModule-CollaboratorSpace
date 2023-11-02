@@ -7,22 +7,14 @@ import java.util.List;
 
 public interface PostService {
 
-     post(PostModel postModel);
+     PostModel post(PostModel postModel);
 
-    public PostModel updatePost(PostModel postModel) {
-        return null;
-    }
+     PostModel updatePost(PostModel postModel);
 
-    public String areasePost(String postId) {
-        return null;
-    }
+     String areasePost(String postId);
 
-    public PostModel postById(String postId) {
-        return null;
-    }
+     PostModel postById(String postId);
 
 
-    public List<PostModel> AllPosts(){
-        return null;
-    }
+     List<PostModel> AllPosts();
 }

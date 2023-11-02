@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class PostModel {
 
     @Id
-    private String id;
+    private UUID id;
     private String title;
     private String shortContent;
     private String content;
