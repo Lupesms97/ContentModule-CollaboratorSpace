@@ -38,7 +38,7 @@ public class PostContoller {
         return ResponseEntity.ok(postModelService);
     }
 
-    @PostMapping("deletePost")
+    @DeleteMapping ("deletePost")
     public ResponseEntity<String> deletePost(@RequestParam String postId){
         String response = postService.areasePost(postId);
         if (response == null){
