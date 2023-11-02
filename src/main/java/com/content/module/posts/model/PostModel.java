@@ -1,23 +1,26 @@
 package com.content.module.posts.model;
 
+
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "content")
+@EqualsAndHashCode(of = "id")
 public class PostModel {
 
     @Id
-    private UUID id;
+    private String id;
     private String title;
     private String shortContent;
     private String content;

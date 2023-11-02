@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @RequiredArgsConstructor
 @Slf4j
@@ -63,7 +63,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public String areasePost(String postId) {
         try {
-            postRepository.deleteById(UUID.fromString(postId));
+            postRepository.deleteById(postId);
             return "Post deleted successfully";
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostModel postById(String postId) {
-        Optional<PostModel> postModelOptional = postRepository.findById(UUID.fromString(postId));
+        Optional<PostModel> postModelOptional = postRepository.findById(postId);
         if (postModelOptional.isPresent()){
             return postModelOptional.get();
         }else {
