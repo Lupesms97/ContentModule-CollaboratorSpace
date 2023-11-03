@@ -1,11 +1,16 @@
 package com.content.module.posts.controller;
 
+import com.content.module.posts.dtos.TokenValidation;
 import com.content.module.posts.model.PostModel;
+import com.content.module.posts.services.Validation;
 import com.content.module.posts.services.impl.PostServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +21,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/posts")
+@Slf4j
 public class PostContoller {
 
     private final PostServiceImpl postService;
+    private final Validation validation;
 
     @PostMapping("post")
     public ResponseEntity<PostModel> post(@RequestBody PostModel postModel){
@@ -79,7 +86,7 @@ public class PostContoller {
         return ResponseEntity.ok(postModel);
     }
 
-    @PostMapping("optFunc")
+    @RequestMapping(method = RequestMethod.POST, value = "/func")
     public ResponseEntity<?> optFunc(@RequestParam String func, @RequestParam String postId){
         HttpHeaders headers = new HttpHeaders();
         headers.add("Allow", "deletion, byId");
@@ -112,6 +119,31 @@ public class PostContoller {
         }
         return ResponseEntity.ok(parValues);
     }
+    @GetMapping("allPostsValidation")
+    public ResponseEntity<List<PostModel>> AllPostsValidation(@RequestHeader("tokenKey") String tokenKey){
+        List<PostModel> postModel;
+
+        try{
+            TokenValidation valid = validation.validateToken(tokenKey);
+            log.info(valid.message());
+            log.info(valid.toString());
+            if (valid.message().equals("valid")){
+                postModel = postService.AllPosts();
+                if (postModel == null){
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                }
+                return new ResponseEntity<>(postModel, HttpStatus.OK);
+            }else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
 
 
 
