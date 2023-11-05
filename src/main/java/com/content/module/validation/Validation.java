@@ -1,4 +1,4 @@
-package com.content.module.posts.services;
+package com.content.module.validation;
 
 import com.content.module.posts.dtos.TokenValidation;
 import org.springframework.cloud.openfeign.FeignClient;

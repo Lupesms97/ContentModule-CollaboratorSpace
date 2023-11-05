@@ -2,7 +2,7 @@ package com.content.module.posts.controller;
 
 import com.content.module.posts.dtos.TokenValidation;
 import com.content.module.posts.model.PostModel;
-import com.content.module.posts.services.Validation;
+import com.content.module.validation.Validation;
 import com.content.module.posts.services.impl.PostServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +44,7 @@ public class PostContoller {
         return ResponseEntity.ok(postModelService);
     }
 
-    @DeleteMapping ("deletePost")
+    @DeleteMapping ("postDeletion")
     public ResponseEntity<String> deletePost(@RequestParam String postId){
         String response = postService.areasePost(postId);
         if (response == null){
