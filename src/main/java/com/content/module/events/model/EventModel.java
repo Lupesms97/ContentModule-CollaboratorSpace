@@ -6,9 +6,11 @@ package com.content.module.events.model;
 //              "end": "2023/10/30",
 //              "color": "red"
 
+import com.content.module.events.dto.EventsDto;
 import com.content.module.events.dto.EventsUpdateDTo;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "events")
+@Builder
 public class EventModel {
     @Id
     private String id;
@@ -37,4 +40,16 @@ public class EventModel {
     public static EventModel convertToEventModel(EventsUpdateDTo eventsUpdateDTo){
         return new EventModel(eventsUpdateDTo.id(),eventsUpdateDTo.title(),convertDate(eventsUpdateDTo.start()),convertDate(eventsUpdateDTo.end()),eventsUpdateDTo.color());
     }
+
+    public static EventModel convertToEventModel(EventsDto eventDto){
+        EventModel eventModel = EventModel.builder()
+                .title(eventDto.title())
+                .start(convertDate(eventDto.start()))
+                .end(convertDate(eventDto.end()))
+                .color(eventDto.color())
+                .build();
+
+        return eventModel;
+    }
+
 }

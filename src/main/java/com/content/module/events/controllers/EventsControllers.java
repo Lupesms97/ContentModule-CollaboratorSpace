@@ -5,14 +5,17 @@ import com.content.module.events.dto.EventsUpdateDTo;
 import com.content.module.events.model.EventModel;
 import com.content.module.events.services.EventsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/events")
 @RequiredArgsConstructor
+@Slf4j
 public class EventsControllers {
     private final EventsService eventsService;
 
@@ -32,14 +35,12 @@ public class EventsControllers {
     @RequestMapping(method = RequestMethod.POST, value = "/event")
     public ResponseEntity<?> createEvent(@RequestBody EventsDto eventsDto)  {
         try {
-            EventModel eventModel = new EventModel();
-
-            eventModel.setStart(EventModel.convertDate(eventsDto.start()));
-            eventModel.setEnd(EventModel.convertDate(eventsDto.end()));
-            eventModel.setTitle(eventsDto.title());
-            eventModel.setColor(eventsDto.color());
-
+            EventModel eventModel = EventModel.convertToEventModel(eventsDto);
+            log.info(eventModel.getStart().toString());
+            log.info(eventModel.getEnd().toString());
             EventModel EventModelReturn =  eventsService.createEvent(eventModel);
+            log.info(EventModelReturn.getStart().toString());
+            log.info(EventModelReturn.getEnd().toString());
             return ResponseEntity.ok(EventModelReturn);
 
         } catch (Exception e) {
@@ -48,10 +49,11 @@ public class EventsControllers {
     }
 
     @PostMapping("saveMultipleEvents")
-    public ResponseEntity<?> saveMultipleEvents(@RequestBody  List<EventModel> eventModelList){
-        for(EventModel eventModel : eventModelList){
-            eventModel.setStart(EventModel.convertDate(eventModel.getStart().toString()));
-            eventModel.setEnd(EventModel.convertDate(eventModel.getEnd().toString()));
+    public ResponseEntity<?> saveMultipleEvents(@RequestBody  List<EventsDto> eventDtoList){
+        List<EventModel> eventModelList = new ArrayList<>();
+        for(EventsDto eventModelDto : eventDtoList){
+            EventModel eventModel = EventModel.convertToEventModel(eventModelDto);
+            eventModelList.add(eventModel);
         }
         List<EventModel> eventModelListReturn = eventsService.saveMultipleEvents(eventModelList);
         if (eventModelListReturn == null || eventModelListReturn.isEmpty()){

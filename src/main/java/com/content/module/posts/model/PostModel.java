@@ -32,4 +32,8 @@ public class PostModel {
         return LocalDate.parse(date, formatter);
 
     }
+
+    public static PostModel getPostModel(){
+        return new PostModel();
+    }
 }
