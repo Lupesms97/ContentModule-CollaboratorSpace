@@ -28,7 +28,7 @@ public class PostModel {
     private String imageURL;
 
     public static LocalDate convertDate(String date){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         return LocalDate.parse(date, formatter);
 
     }

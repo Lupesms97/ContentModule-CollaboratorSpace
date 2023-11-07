@@ -39,7 +39,7 @@ public class PostContoller {
         return ResponseEntity.ok(postModelService);
     }
 
-    @PostMapping("atualizationPost")
+    @PutMapping("update")
     public ResponseEntity<PostModel> updatePost(@RequestBody PostModelDtoWithToken postModeldto){
         PostModel postModel = PostModelDtoWithToken.convertFromPostDtoWithToken(postModeldto);
         PostModel postModelService = postService.updatePost(postModel);

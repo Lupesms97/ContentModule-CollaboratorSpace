@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 @Data
 @AllArgsConstructor
@@ -32,7 +33,8 @@ public class EventModel {
     private String color;
 
     public static LocalDate convertDate(String date){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Locale BRAZIL = new Locale("pt", "BR");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd").withLocale(BRAZIL);
         return LocalDate.parse(date, formatter);
 
     }
