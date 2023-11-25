@@ -3,6 +3,7 @@ package com.content.module.posts.controller;
 import com.content.module.posts.dtos.PostModelDtoWithToken;
 import com.content.module.posts.dtos.PostModelDtoWithoutToken;
 import com.content.module.posts.dtos.TokenValidation;
+import com.content.module.posts.mappers.PostMapper;
 import com.content.module.posts.model.PostModel;
 import com.content.module.validation.Validation;
 import com.content.module.posts.services.impl.PostServiceImpl;
@@ -31,7 +32,7 @@ public class PostContoller {
 
     @PostMapping("post")
     public ResponseEntity<PostModel> post(@RequestBody PostModelDtoWithoutToken postDto){
-        PostModel postModel = PostModelDtoWithoutToken.convertFromPostModelDtoWithouttoken(postDto);
+        PostModel postModel = PostMapper.transformWithoutToken(postDto);
         PostModel postModelService = postService.post(postModel);
         if (postModelService == null){
             return ResponseEntity.notFound().build();
@@ -41,7 +42,7 @@ public class PostContoller {
 
     @PutMapping("update")
     public ResponseEntity<PostModel> updatePost(@RequestBody PostModelDtoWithToken postModeldto){
-        PostModel postModel = PostModelDtoWithToken.convertFromPostDtoWithToken(postModeldto);
+        PostModel postModel = PostMapper.transformWithToken(postModeldto);
         PostModel postModelService = postService.updatePost(postModel);
         if (postModelService == null){
             return ResponseEntity.notFound().build();
@@ -63,7 +64,7 @@ public class PostContoller {
         List<PostModel> postModelList = new ArrayList<>();
 
         for(PostModelDtoWithoutToken postModelDtoWithoutToken : postModelDtoList){
-            postModelList.add(PostModelDtoWithoutToken.convertFromPostModelDtoWithouttoken(postModelDtoWithoutToken));
+            postModelList.add(PostMapper.transformWithoutToken(postModelDtoWithoutToken));
         }
         List<PostModel> postModelService = postService.saveMulti(postModelList);
         if (postModelService == null){
