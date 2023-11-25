@@ -4,6 +4,7 @@ import com.content.module.events.ExepectionsHandle.DBError;
 import com.content.module.events.model.EventModel;
 import com.content.module.events.repositories.EventsRepository;
 import com.content.module.events.services.EventsService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EventsServiceImpl implements EventsService {
 
     private final EventsRepository eventsRepository;

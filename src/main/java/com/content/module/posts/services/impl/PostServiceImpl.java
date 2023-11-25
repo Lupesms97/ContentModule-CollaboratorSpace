@@ -5,6 +5,7 @@ import com.content.module.posts.exepctionsHandles.PostNotFound;
 import com.content.module.posts.model.PostModel;
 import com.content.module.posts.respositories.PostRepository;
 import com.content.module.posts.services.PostService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 @Service
+@Transactional
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
